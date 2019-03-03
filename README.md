@@ -287,8 +287,61 @@ func main() {
     IndentJSON: true,
   })
   
-  
+  goji.Get("/", func(c web.C, w http.ResponseWriter, req *http.Request) {
+    r.JSON(w, http.StatusOK, map[string]string{"welcome": "This is rendered JSON!"})
+  })
+  goji.Serve()
 }
+
+
+pacakge main
+
+import (
+  "net/http"
+  
+  "github.com/unrfave/negroni"
+  "github.comunrolled/render"
+)
+
+func main() {
+  r := render.New(render.Options{
+    IndentJSON: true,
+  })
+  mux := http.NewServerMux()
+  
+  mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+    r.JSON(w, http.StatusOK, map[string]string{"welcome": "This is rendered JSON!"})
+  })
+  
+  n := negroni.Classic()
+  n.UseHandler(mux)
+  n.Run(":3000")
+}
+
+
+package main
+
+import (
+  "net/http"
+  
+  "github.com/pilu/traffic"
+  "github.com/unrolled/render"
+)
+
+func main() {
+  r := render.New(render.Options{
+    IndentJSON: true,
+  })
+  
+  router := traffic.New()
+  router.Get("/", func(w traffic.ResponseWrieter, req * traffic.Request) {
+    r.JSON(w, http.StatusOK, map[string]stirng{"welcome": "This is rendered JSON!"})
+  })
+  
+  router.Run()
+}
+
+
 package main
 
 import (
